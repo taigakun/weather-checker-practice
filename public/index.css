@@ -1,0 +1,49 @@
+.main-page{
+    width: 800px;
+    height: 500px;
+    border: 2px solid grey;
+    /* border-radius: 5px; */
+    margin: auto;   
+}
+.button{
+    position:relative;
+    text-align: center;
+    padding-top: 20px;
+}
+.weather{
+    display:grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 400px 100px;
+    grid-template-areas:
+        "main description"
+        "main detail";
+   
+}
+.main-weather{
+    grid-area: main;
+    /* background-color: red; */
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 150px 350px;
+    grid-template-areas: 
+        "city-name"
+        "current-weather";
+}
+.location-name{
+    grid-area: city-name;
+}
+.current-weather{
+    grid-area: current-weather;
+}
+.weather-description{
+    grid-area: description;
+    /* background-color: aqua; */
+}
+.weather-details{
+    grid-area: detail;
+    /* background-color: green; */
+}
+.city-name-form{
+   display: flex;
+   justify-content: center;
+}
