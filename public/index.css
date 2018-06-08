@@ -1,7 +1,7 @@
 .main-page{
     width: 800px;
     height: 500px;
-    border: 2px solid grey;
+    /* border: 2px solid grey; */
     /* border-radius: 5px; */
     margin: auto;   
 }
@@ -11,12 +11,12 @@
     padding-top: 20px;
 }
 .weather{
-    display:grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 400px 100px;
+    /* display:grid; */
+    /* grid-template-columns: 50%; */
+    /* grid-template-rows: 400px 100px;
     grid-template-areas:
-        "main description"
-        "main detail";
+        "main"
+        "description"; */
    
 }
 .main-weather{
@@ -24,24 +24,48 @@
     /* background-color: red; */
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: 150px 350px;
+    grid-template-rows: 200px 350px;
     grid-template-areas: 
         "city-name"
         "current-weather";
 }
 .location-name{
+    width: 100%;
+    margin: auto;
+    /* text-align: center; */
+}
+.location-name h5{
     grid-area: city-name;
+    margin-left: 10%;
+    font-family: 'Raleway', sans-serif;
+    font-size: 25px;
 }
-.current-weather{
+.location-name h3{
+    height: 30px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+.currnet-weather h5{
     grid-area: current-weather;
+    font-family: 'Raleway', sans-serif;
+    font-size: 25px;
+    margin-left: 10%;
 }
-.weather-description{
-    grid-area: description;
-    /* background-color: aqua; */
+.currnet-weather h4{
+    text-align: center;
 }
 .weather-details{
-    grid-area: detail;
-    /* background-color: green; */
+    display: flex;
+    margin-top:40px;
+}
+.weather-details div{
+    width: 200px;
+}
+.weather-details-tag{
+    margin-left: 30%;
+}
+.weather-details-content h5{
+    font-weight: bold;
 }
 .city-name-form{
    display: flex;

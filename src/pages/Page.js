@@ -14,45 +14,64 @@ class Page extends Component{
                 temp_min: "",
                 temp_max: ""
             },
-            icon: ""
+            icon: "",
+            input:{
+                city: "",
+            },
+            status: "choose the city!",
+            api: "http://api.openweathermap.org/data/2.5/weather?q=&&appid=36b79456f480f88aeadc9d2299141bcb"
         };
-        this.api = "http://api.openweathermap.org/data/2.5/weather?q=Brisbane&&appid=36b79456f480f88aeadc9d2299141bcb";
         this.iconApi = "http://openweathermap.org/img/w/";
         this.getLocationName = this.getLocationName.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event){
+        this.setState({
+            input:{
+                city: event.target.value
+            }
+        })
     }
     getLocationName(){
-        fetch(this.api)
+        this.setState({
+            api: "http://api.openweathermap.org/data/2.5/weather?q=" + this.state.input.city + "&&appid=36b79456f480f88aeadc9d2299141bcb"
+    }, () => {
+        fetch(this.state.api)
         .then((response) => {
-            return response.json();
+            if(response.ok){
+                return response.json()
+                .then((myJson) =>{
+                    this.setState({
+                    main_weather:{
+                    weather: myJson.weather[0].main,
+                    location: myJson.name,
+                    temp: myJson.main.temp,
+                    humidity: myJson.main.humidity,
+                    temp_min: myJson.main.temp_min,
+                    temp_max: myJson.main.temp_max
+                    }, 
+                    icon: myJson.weather[0].icon,
+                    status: "Check the weather!"
+                    })
+                })
+                .then(()=> {
+                    console.log(this.state.main_weather.temp_min);
+                })
+            }else{
+                console.log(this.state.input.city);
+                return response.json()
+                .then((err) => {
+                    this.setState({
+                        status: "Please choose another city:("
+                    })
+                })
+            }
         })
-        .then((myJson) =>{
-            this.setState({
-            main_weather:{
-            weather: myJson.weather[0].main,
-            location: myJson.name,
-            temp: myJson.main.temp,
-            humidity: myJson.main.humidity,
-            temp_min: myJson.main.temp_min,
-            temp_max: myJson.main.temp_max
-            }, 
-            icon: myJson.weather[0].icon
-            })
-            
-        })
-        console.log(this.state.main_weather.temp_min);
+    })
+        
     }
+        
 
-    // getWeatherIcon(){
-    //     fetch(this.iconApi + this.state.icon + ".png", {
-    //         mode: 'cors'
-    //     })
-    //     .then((response) => {
-    //         console.log(response);
-    //     })
-    // }
-    // componentDidUpdate(prevProps, prevState){
-    //     this.getWeatherIcon();
-    // }
     render(){
         return(
             <div>
@@ -67,11 +86,11 @@ class Page extends Component{
                 />
             </div>
             <div className="button">
-            <h2>Choose city!</h2>
+            <h2>{this.state.status}</h2>
             <Row className="city-name-form">
-                <Input label="type city name here"/>
+                <Input label="type city name here" value={this.state.input.city} onChange={this.handleChange}/>
             </Row>
-            <Button waves='light' onClick={this.getLocationName}>Seach!<Icon left>cloud</Icon></Button>
+            <Button waves='light' onClick={this.getLocationName} type="button" >Seach!<Icon left>cloud</Icon></Button>
             </div>
             </div>
         );
